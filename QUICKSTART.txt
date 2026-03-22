@@ -1,0 +1,135 @@
+# WATCHMIRROR - Quick Start Guide
+
+## Installation & Setup
+
+1. **Install MongoDB**
+   - Download MongoDB Community Server from https://www.mongodb.com/try/download/community
+   - Or use MongoDB Atlas (cloud) for easier setup
+
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Configure Environment**
+   ```bash
+   cp .env.local.example .env.local
+   ```
+   
+   Edit `.env.local`:
+   ```
+   MONGODB_URI=mongodb://localhost:27017/watchmirror
+   ADMIN_SECRET=your-secure-password
+   JWT_SECRET=your-jwt-secret
+   ```
+
+4. **Seed Sample Data** (Recommended)
+   ```bash
+   node scripts/seed.js
+   ```
+   This adds 10 sample movies with test HLS streams.
+
+5. **Start Development Server**
+   ```bash
+   npm run dev
+   ```
+
+6. **Open Browser**
+   Navigate to: http://localhost:3000
+
+## Testing HLS Streaming
+
+The seed script includes test HLS streams from Mux. These are real working streams you can use for testing:
+- Any movie page with the HLS URL will stream properly
+
+## Admin Dashboard
+
+1. Navigate to: http://localhost:3000/admin-secret-dashboard
+2. Enter the password you set in `ADMIN_SECRET`
+3. You can:
+   - Add new movies
+   - Edit existing movies
+   - Delete movies
+   - Mark movies as featured
+
+## Adding Your Own Movies
+
+In the Admin Dashboard, add a movie with:
+
+- **Title**: Movie name
+- **Slug**: URL-friendly version (e.g., "my-movie")
+- **Poster URL**: Image URL (direct link to image)
+- **Backdrop URL**: Hero image URL
+- **Description**: Movie plot/synopsis
+- **HLS URL**: Your .m3u8 stream URL (required for playback)
+- **Audio Languages**: Comma-separated (e.g., "Telugu, Hindi, English")
+- **Quality**: Comma-separated (e.g., "1080p, 720p, 480p")
+- **Genre**: Comma-separated (e.g., "Action, Drama")
+- **Year**: Release year (e.g., 2024)
+- **Featured**: Check to show on homepage banner
+
+## HLS Streaming
+
+WATCHMIRROR uses hls.js for video playback. Supported formats:
+- .m3u8 playlists
+- HLS streams with multiple quality levels
+- Audio track selection (if available in stream)
+- Subtitle support (if available in stream)
+
+## Troubleshooting
+
+### MongoDB Connection Error
+- Ensure MongoDB is running
+- Check your MONGODB_URI in .env.local
+- For MongoDB Atlas, use your connection string
+
+### Video Not Playing
+- Verify the HLS URL is correct
+- Ensure CORS is configured on your streaming server
+- Test with the included sample HLS URLs first
+
+### Images Not Loading
+- Verify image URLs are publicly accessible
+- Use direct image links (not pages with images)
+- Test URLs in a browser first
+
+## Production Deployment
+
+### Vercel (Recommended)
+
+1. Push to GitHub
+2. Create new Vercel project
+3. Connect your repository
+4. Add environment variables:
+   - MONGODB_URI
+   - ADMIN_SECRET
+   - JWT_SECRET
+5. Deploy
+
+### Other Platforms
+
+Build for production:
+```bash
+npm run build
+npm start
+```
+
+## Features Overview
+
+- **Home Page**: Featured movie banner, trending/latest sections by language
+- **Browse**: Filter by language and genre
+- **Search**: Instant search with filters
+- **Movie Detail**: Full information, play button, related movies
+- **Watch Page**: Full-featured video player
+- **Profile**: Continue watching, favorites
+- **Admin**: Full movie management
+
+## Tech Stack
+
+- Next.js 16 (App Router)
+- React 19
+- TypeScript (strict mode)
+- Tailwind CSS 4
+- MongoDB 6
+- hls.js for video streaming
+- JWT for authentication

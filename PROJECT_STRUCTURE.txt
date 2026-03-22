@@ -1,0 +1,109 @@
+# WATCHMIRROR Project Structure
+
+```
+watchmirror/
+├── app/                           # Next.js App Router
+│   ├── api/                       # API Routes
+│   │   ├── admin/                # Admin API (protected)
+│   │   │   ├── login/           # Admin login endpoint
+│   │   │   └── movies/          # Admin movie management
+│   │   ├── movies/              # Movies API
+│   │   │   └── [slug]/         # Individual movie endpoints
+│   │   └── user/               # User data API
+│   ├── admin-secret-dashboard/ # Admin dashboard page
+│   ├── movie/
+│   │   └── [slug]/             # Movie detail page
+│   ├── watch/
+│   │   └── [slug]/             # Video player page
+│   ├── movies/                  # Movies listing page
+│   ├── series/                  # Series page
+│   ├── languages/              # Browse by language
+│   ├── search/                 # Search page
+│   ├── profile/                # User profile page
+│   ├── layout.tsx              # Root layout
+│   ├── page.tsx                # Home page
+│   ├── globals.css             # Global styles
+│   ├── loading.tsx             # Loading state
+│   ├── not-found.tsx          # 404 page
+│   └── error.tsx              # Global error page
+├── components/                 # React components
+│   ├── Navbar.tsx             # Sticky navigation
+│   ├── MobileNav.tsx          # Bottom mobile nav
+│   ├── MovieCard.tsx          # Movie poster card
+│   ├── MovieRow.tsx           # Horizontal movie row
+│   ├── HeroBanner.tsx         # Cinematic hero section
+│   ├── SearchOverlay.tsx      # Search modal
+│   ├── VideoPlayer.tsx        # HLS video player
+│   ├── ContinueWatchingCard.tsx
+│   ├── Toaster.tsx            # Notifications
+│   ├── Skeleton.tsx           # Loading skeletons
+│   ├── ErrorBoundary.tsx      # Error handling
+│   └── index.ts              # Component exports
+├── hooks/                      # Custom React hooks
+│   ├── useContinueWatching.ts
+│   ├── useFavorites.ts
+│   ├── useDebounce.ts
+│   └── index.ts
+├── lib/                        # Utilities and config
+│   ├── mongodb.ts            # MongoDB connection
+│   ├── types.ts              # TypeScript types
+│   ├── constants.ts          # App constants
+│   ├── utils.ts              # Helper functions
+│   ├── api.ts                # API helpers
+│   └── sampleData.ts         # Fallback data
+├── models/                     # Database models
+│   ├── Movie.ts
+│   ├── User.ts
+│   └── index.ts
+├── scripts/                    # Utility scripts
+│   └── seed.js               # Database seeder
+├── public/                     # Static assets
+│   ├── favicon.svg
+│   └── robots.txt
+├── next.config.js              # Next.js config
+├── tailwind.config.js          # Tailwind config
+├── tsconfig.json               # TypeScript config
+├── postcss.config.js           # PostCSS config
+├── package.json                # Dependencies
+├── .env.local                  # Environment variables
+├── .gitignore                  # Git ignore
+├── README.md                   # Documentation
+└── QUICKSTART.txt             # Quick start guide
+```
+
+## Key Features Implemented
+
+✓ Premium cinematic UI with dark theme
+✓ Next.js 16 App Router with TypeScript
+✓ MongoDB integration with connection caching
+✓ HLS video streaming with hls.js
+✓ Custom video player with full controls
+✓ Responsive design (mobile + desktop)
+✓ Real-time search with filters
+✓ Continue watching functionality
+✓ User favorites
+✓ Admin dashboard with CRUD
+✓ JWT authentication
+✓ Error boundaries and loading states
+✓ SEO optimization (sitemap, robots)
+✓ Sample data fallback
+
+## To Run
+
+```bash
+# Install dependencies
+npm install
+
+# Start MongoDB (if local)
+
+# Seed sample data
+npm run seed
+
+# Start development
+npm run dev
+```
+
+## Admin Access
+
+URL: http://localhost:3000/admin-secret-dashboard
+Password: (set in ADMIN_SECRET env variable)
