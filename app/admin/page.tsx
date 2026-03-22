@@ -236,20 +236,20 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-mirror-darker pt-20 md:pt-24 pb-8">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold text-white">
+            <h1 className="text-2xl md:text-4xl font-bold text-white">
               WATCH<span className="text-mirror-primary">MIRROR</span> Admin
             </h1>
             <p className="text-gray-400 mt-2">Manage your movie library</p>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 md:space-x-4 w-full md:w-auto">
             <button
               onClick={() => {
                 resetForm();
                 setShowAddForm(true);
               }}
-              className="btn-primary"
+              className="btn-primary flex-1 md:flex-none"
             >
               Add Movie
             </button>
@@ -259,21 +259,21 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="glass-effect rounded-xl p-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-8">
+          <div className="glass-effect rounded-xl p-4 md:p-6">
             <p className="text-gray-400 text-sm mb-2">Total Movies</p>
-            <p className="text-3xl font-bold text-white">{movies.length}</p>
+            <p className="text-2xl md:text-3xl font-bold text-white">{movies.length}</p>
           </div>
-          <div className="glass-effect rounded-xl p-6">
+          <div className="glass-effect rounded-xl p-4 md:p-6">
             <p className="text-gray-400 text-sm mb-2">Featured Movies</p>
-            <p className="text-3xl font-bold text-white">
+            <p className="text-2xl md:text-3xl font-bold text-white">
               {movies.filter((m) => m.featured).length}
             </p>
           </div>
-          <div className="glass-effect rounded-xl p-6">
+          <div className="glass-effect rounded-xl p-4 md:p-6 sm:col-span-2 md:col-span-1">
             <p className="text-gray-400 text-sm mb-2">Latest Added</p>
-            <p className="text-3xl font-bold text-white">
-              {movies.length > 0 ? movies[0]?.title.substring(0, 20) + '...' : 'None'}
+            <p className="text-lg md:text-2xl font-bold text-white truncate">
+              {movies.length > 0 ? movies[0]?.title : 'None'}
             </p>
           </div>
         </div>
@@ -429,27 +429,27 @@ export default function AdminDashboard() {
         )}
 
         <div className="glass-effect rounded-2xl overflow-hidden">
-          <div className="p-6 border-b border-white/10">
-            <h2 className="text-xl font-bold text-white">Movie Library</h2>
+          <div className="p-4 md:p-6 border-b border-white/10">
+            <h2 className="text-lg md:text-xl font-bold text-white">Movie Library</h2>
           </div>
 
-          <div className="overflow-x-auto">
+          <div className="hidden md:block overflow-x-auto">
             <table className="w-full">
               <thead className="bg-mirror-gray/50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                     Movie
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                     Year
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                     Languages
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                     Featured
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
@@ -457,23 +457,23 @@ export default function AdminDashboard() {
               <tbody className="divide-y divide-white/10">
                 {movies.map((movie) => (
                   <tr key={movie._id} className="hover:bg-white/5">
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-4 py-3">
                       <div className="flex items-center">
                         <img
                           src={movie.poster}
                           alt={movie.title}
-                          className="w-12 h-18 object-cover rounded"
+                          className="w-10 h-14 object-cover rounded"
                         />
-                        <div className="ml-4">
-                          <p className="text-white font-medium">{movie.title}</p>
-                          <p className="text-gray-500 text-sm">{movie.slug}</p>
+                        <div className="ml-3">
+                          <p className="text-white font-medium text-sm">{movie.title}</p>
+                          <p className="text-gray-500 text-xs">{movie.slug}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-gray-300">
+                    <td className="px-4 py-3 text-gray-300 text-sm">
                       {movie.year}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-4 py-3">
                       <div className="flex flex-wrap gap-1">
                         {movie.audioLanguages.slice(0, 2).map((lang) => (
                           <span key={lang} className="badge badge-language text-xs">
@@ -482,23 +482,23 @@ export default function AdminDashboard() {
                         ))}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-4 py-3">
                       {movie.featured ? (
-                        <span className="text-yellow-500">★ Featured</span>
+                        <span className="text-yellow-500 text-sm">★</span>
                       ) : (
                         <span className="text-gray-500">-</span>
                       )}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right">
+                    <td className="px-4 py-3 text-right">
                       <button
                         onClick={() => handleEdit(movie)}
-                        className="text-blue-400 hover:text-blue-300 mr-4"
+                        className="text-blue-400 hover:text-blue-300 text-sm mr-3"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => handleDelete(movie.slug)}
-                        className="text-red-400 hover:text-red-300"
+                        className="text-red-400 hover:text-red-300 text-sm"
                       >
                         Delete
                       </button>
@@ -509,8 +509,55 @@ export default function AdminDashboard() {
             </table>
           </div>
 
+          <div className="md:hidden divide-y divide-white/10">
+            {movies.map((movie) => (
+              <div key={movie._id} className="p-4 hover:bg-white/5">
+                <div className="flex items-start gap-3">
+                  <img
+                    src={movie.poster}
+                    alt={movie.title}
+                    className="w-16 h-22 object-cover rounded"
+                  />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <p className="text-white font-medium truncate">{movie.title}</p>
+                        <p className="text-gray-500 text-xs">{movie.slug}</p>
+                      </div>
+                      <div className="flex items-center gap-2 flex-shrink-0">
+                        {movie.featured && <span className="text-yellow-500">★</span>}
+                        <button
+                          onClick={() => handleEdit(movie)}
+                          className="text-blue-400 hover:text-blue-300 text-xs px-2 py-1"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDelete(movie.slug)}
+                          className="text-red-400 hover:text-red-300 text-xs px-2 py-1"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-2 mt-2">
+                      <span className="text-gray-400 text-xs">{movie.year}</span>
+                      <div className="flex flex-wrap gap-1">
+                        {movie.audioLanguages.slice(0, 2).map((lang) => (
+                          <span key={lang} className="badge badge-language text-xs">
+                            {lang}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
           {movies.length === 0 && (
-            <div className="p-12 text-center">
+            <div className="p-8 md:p-12 text-center">
               <p className="text-gray-400">No movies in library. Add your first movie!</p>
             </div>
           )}
