@@ -114,8 +114,8 @@ export const MovieRow = ({ title, movies, seeAllLink }: MovieRowProps) => {
           </svg>
         </button>
 
-        <div className="absolute left-0 top-0 bottom-4 w-8 bg-gradient-to-r from-[#0a0a0a] to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity md:hidden" />
-        <div className="absolute right-0 top-0 bottom-4 w-8 bg-gradient-to-l from-[#0a0a0a] to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity md:hidden" />
+        <div className="absolute left-0 top-0 bottom-4 w-8 bg-gradient-to-r from-[#080808] to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity md:hidden" />
+        <div className="absolute right-0 top-0 bottom-4 w-8 bg-gradient-to-l from-[#080808] to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity md:hidden" />
       </div>
     </section>
   );

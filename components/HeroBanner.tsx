@@ -28,13 +28,13 @@ export const HeroBanner = ({ movie }: HeroBannerProps) => {
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/70 to-[#0a0a0a]/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0a0a0a]/80" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a]/50 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#080808] via-[#080808]/70 to-[#080808]/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#080808]/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#080808]/50 via-transparent to-transparent" />
       </div>
 
-      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#0a0a0a] to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#080808] to-transparent" />
       
       <div className="absolute top-1/4 left-0 right-0 bottom-0 flex items-center">
         <div className="max-w-7xl mx-auto px-4 md:px-8 w-full">

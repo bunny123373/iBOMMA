@@ -98,7 +98,7 @@ export default function MoviesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] pt-20 md:pt-24 pb-12">
+    <div className="min-h-screen bg-[#080808] pt-20 md:pt-24 pb-12">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">

@@ -63,7 +63,7 @@ export const HeroSkeleton = () => {
 
 export const PageSkeleton = () => {
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-[#080808]">
       <HeroSkeleton />
       <div className="py-8">
         <MovieRowSkeleton count={8} />

@@ -31,7 +31,7 @@ export default async function HomePage() {
   const englishMovies = movies.filter((m) => m.audioLanguages?.includes('English')).slice(0, 10);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-[#080808]">
       {featuredMovie && <HeroBanner movie={featuredMovie} />}
 
       <div className="space-y-2 pb-12">
@@ -43,12 +43,12 @@ export default async function HomePage() {
         <MovieRow title="English Movies" movies={englishMovies} seeAllLink="/movies?language=English" />
       </div>
 
-      <footer className="bg-[#0a0a0a] border-t border-white/5 py-16 px-4 md:px-8">
+      <footer className="bg-[#080808] border-t border-white/5 py-16 px-4 md:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
             <div>
-              <h3 className="text-white font-bold text-lg mb-5 flex items-center gap-2">
-                <span className="text-red-600">WATCH</span>MIRROR
+              <h3 className="text-2xl font-bold text-white tracking-tight mb-5">
+                WATCH<span className="text-mirror-primary">MIRROR</span>
               </h3>
               <p className="text-gray-500 text-sm leading-relaxed">
                 Premium streaming experience for the best movies from around the world.
@@ -89,7 +89,7 @@ export default async function HomePage() {
           </div>
           <div className="border-t border-white/5 pt-8 text-center">
             <p className="text-gray-600 text-sm">
-              © {new Date().getFullYear()} WATCHMIRROR. All rights reserved.
+              © {new Date().getFullYear()} WATCH<span className="text-mirror-primary">MIRROR</span>. All rights reserved.
             </p>
           </div>
         </div>
