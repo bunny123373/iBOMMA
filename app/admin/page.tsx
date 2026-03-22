@@ -5,6 +5,19 @@ import { useRouter } from 'next/navigation';
 import { Movie } from '@/lib/types';
 import { showToast } from '@/components/Toaster';
 
+const TMDB_API_KEY = '83a327b565b5e333dd2dc755f76177a9';
+const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p';
+
+interface TMDBSearchResult {
+  id: number;
+  title: string;
+  poster_path: string | null;
+  backdrop_path: string | null;
+  overview: string;
+  release_date: string;
+  genre_ids: number[];
+}
+
 export default function AdminDashboard() {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -27,6 +40,9 @@ export default function AdminDashboard() {
     year: new Date().getFullYear(),
     featured: false,
   });
+  const [tmdbQuery, setTmdbQuery] = useState('');
+  const [tmdbResults, setTmdbResults] = useState<TMDBSearchResult[]>([]);
+  const [tmdbSearching, setTmdbSearching] = useState(false);
 
   useEffect(() => {
     const savedToken = localStorage.getItem('adminToken');
@@ -49,6 +65,59 @@ export default function AdminDashboard() {
     } catch (error) {
       console.error('Error fetching movies:', error);
     }
+  };
+
+  const searchTMDB = async (query: string) => {
+    if (query.length < 2) {
+      setTmdbResults([]);
+      return;
+    }
+    setTmdbSearching(true);
+    try {
+      const res = await fetch(
+        `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&include_adult=false`
+      );
+      const data = await res.json();
+      setTmdbResults(data.results?.slice(0, 8) || []);
+    } catch (error) {
+      console.error('TMDB search error:', error);
+      setTmdbResults([]);
+    } finally {
+      setTmdbSearching(false);
+    }
+  };
+
+  const fillFromTMDB = async (tmdbMovie: TMDBSearchResult) => {
+    setTmdbQuery('');
+    setTmdbResults([]);
+    
+    const genres: Record<number, string> = {
+      28: 'Action', 12: 'Adventure', 16: 'Animation', 35: 'Comedy',
+      80: 'Crime', 99: 'Documentary', 18: 'Drama', 10751: 'Family',
+      14: 'Fantasy', 36: 'History', 27: 'Horror', 10402: 'Music',
+      9648: 'Mystery', 10749: 'Romance', 878: 'Science Fiction',
+      10770: 'TV Movie', 53: 'Thriller', 10752: 'War', 37: 'Western',
+    };
+    
+    const genreNames = tmdbMovie.genre_ids.map((id) => genres[id]).filter(Boolean);
+    
+    const slug = tmdbMovie.title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '');
+
+    setFormData({
+      ...formData,
+      title: tmdbMovie.title,
+      slug: slug,
+      poster: tmdbMovie.poster_path ? `${TMDB_IMAGE_BASE}/w500${tmdbMovie.poster_path}` : '',
+      backdrop: tmdbMovie.backdrop_path ? `${TMDB_IMAGE_BASE}/w1280${tmdbMovie.backdrop_path}` : '',
+      description: tmdbMovie.overview || '',
+      year: tmdbMovie.release_date ? new Date(tmdbMovie.release_date).getFullYear() : new Date().getFullYear(),
+      genre: genreNames.join(', '),
+    });
+    
+    showToast('Movie details filled from TMDB', 'success');
   };
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -283,6 +352,56 @@ export default function AdminDashboard() {
             <h2 className="text-2xl font-bold text-white mb-6">
               {editingMovie ? 'Edit Movie' : 'Add New Movie'}
             </h2>
+
+            {!editingMovie && (
+              <div className="mb-6 p-4 bg-mirror-gray/30 rounded-xl">
+                <label className="block text-sm text-gray-400 mb-2">Search TMDB to Auto-Fill</label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={tmdbQuery}
+                    onChange={(e) => {
+                      setTmdbQuery(e.target.value);
+                      searchTMDB(e.target.value);
+                    }}
+                    placeholder="Search for a movie on TMDB..."
+                    className="premium-input w-full pr-10"
+                  />
+                  <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+                {tmdbSearching && (
+                  <p className="text-sm text-gray-400 mt-2">Searching...</p>
+                )}
+                {tmdbResults.length > 0 && (
+                  <div className="mt-2 bg-mirror-dark rounded-lg overflow-hidden border border-white/10 max-h-64 overflow-y-auto">
+                    {tmdbResults.map((result) => (
+                      <button
+                        key={result.id}
+                        type="button"
+                        onClick={() => fillFromTMDB(result)}
+                        className="w-full flex items-center gap-3 p-3 hover:bg-white/10 text-left transition-colors"
+                      >
+                        {result.poster_path && (
+                          <img
+                            src={`${TMDB_IMAGE_BASE}/w92${result.poster_path}`}
+                            alt={result.title}
+                            className="w-10 h-14 object-cover rounded"
+                          />
+                        )}
+                        <div className="flex-1 min-w-0">
+                          <p className="text-white font-medium truncate">{result.title}</p>
+                          <p className="text-gray-400 text-sm">
+                            {result.release_date ? new Date(result.release_date).getFullYear() : 'N/A'}
+                          </p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
