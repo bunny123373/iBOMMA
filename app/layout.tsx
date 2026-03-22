@@ -5,9 +5,9 @@ import { MobileNav } from '@/components/MobileNav';
 import { Toaster } from '@/components/Toaster';
 
 export const metadata: Metadata = {
-  title: 'WATCHMIRROR - Premium Movie Streaming',
-  description: 'Stream the latest movies and TV shows in stunning quality',
-  keywords: ['streaming', 'movies', 'ott', 'premium', 'hd'],
+  title: 'Prime Video - Movies & TV Shows',
+  description: 'Watch movies and TV shows online',
+  keywords: ['streaming', 'movies', 'tv shows', 'prime video'],
   icons: {
     icon: '/favicon.ico',
   },
