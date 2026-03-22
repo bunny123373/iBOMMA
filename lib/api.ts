@@ -25,7 +25,7 @@ export async function fetchApi<T>(
   return response.json();
 }
 
-export async function getMovies(params?: {
+export async function getMovies<T>(params?: {
   q?: string;
   language?: string;
   genre?: string;
@@ -46,6 +46,6 @@ export async function getMovies(params?: {
   return fetchApi<{ movies: T[] }>(url);
 }
 
-export async function getMovie(slug: string) {
+export async function getMovie<T>(slug: string) {
   return fetchApi<{ movie: T }>(`/api/movies/${slug}`);
 }

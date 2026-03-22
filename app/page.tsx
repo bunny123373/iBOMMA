@@ -3,6 +3,7 @@ import { HeroBanner } from '@/components/HeroBanner';
 import { MovieRow } from '@/components/MovieRow';
 import { ContinueWatchingCard } from '@/components/ContinueWatchingCard';
 import { sampleMovies } from '@/lib/sampleData';
+import { Movie } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 60;
@@ -20,7 +21,7 @@ async function getMovies() {
 }
 
 export default async function HomePage() {
-  const movies = await getMovies();
+  const movies = (await getMovies()) as Movie[];
 
   const featuredMovie = movies.find((m) => m.featured) || movies[0];
   const trendingMovies = movies.slice(0, 10);

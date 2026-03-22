@@ -7,8 +7,8 @@ import { Movie } from '@/lib/types';
 
 interface ContinueWatchingItem {
   movieSlug: string;
-  poster: string;
-  title: string;
+  poster?: string;
+  title?: string;
   currentTime: number;
   duration: number;
 }
@@ -93,7 +93,7 @@ export default function ProfilePage() {
                         <div className="aspect-[2/3] relative">
                           <Image
                             src={item.poster || '/placeholder.jpg'}
-                            alt={item.title}
+                            alt={item.title || 'Movie'}
                             fill
                             className="object-cover"
                           />

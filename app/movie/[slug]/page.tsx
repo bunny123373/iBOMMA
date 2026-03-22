@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getDb } from '@/lib/mongodb';
 import { MovieRow } from '@/components/MovieRow';
+import { Movie } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
 
@@ -82,12 +83,12 @@ export default async function MoviePage({ params }: PageProps) {
             <div className="flex flex-wrap items-center gap-3 mb-6">
               <span className="text-gray-300">{movie.year}</span>
               <span className="text-gray-500">•</span>
-              {movie.audioLanguages.map((lang) => (
+              {movie.audioLanguages.map((lang: string) => (
                 <span key={lang} className="badge badge-language">
                   {lang}
                 </span>
               ))}
-              {movie.quality.map((q) => (
+              {movie.quality.map((q: string) => (
                 <span key={q} className="badge badge-quality">
                   {q}
                 </span>
@@ -95,7 +96,7 @@ export default async function MoviePage({ params }: PageProps) {
             </div>
 
             <div className="flex flex-wrap gap-2 mb-6">
-              {movie.genre.map((g) => (
+              {movie.genre.map((g: string) => (
                 <span key={g} className="badge badge-genre">
                   {g}
                 </span>
@@ -158,7 +159,7 @@ export default async function MoviePage({ params }: PageProps) {
 
         {relatedMovies.length > 0 && (
           <div className="mt-12">
-            <MovieRow title="More Like This" movies={relatedMovies} />
+            <MovieRow title="More Like This" movies={relatedMovies as unknown as Movie[]} />
           </div>
         )}
       </div>
