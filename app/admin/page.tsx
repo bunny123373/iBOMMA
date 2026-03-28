@@ -53,6 +53,17 @@ export default function AdminDashboard() {
     }
   }, []);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (tmdbQuery.length >= 2) {
+        searchTMDB(tmdbQuery);
+      } else {
+        setTmdbResults([]);
+      }
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [tmdbQuery]);
+
   const fetchMovies = async (authToken: string) => {
     try {
       const res = await fetch('/api/admin/movies', {
@@ -75,12 +86,13 @@ export default function AdminDashboard() {
     setTmdbSearching(true);
     try {
       const res = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&include_adult=false`
+        `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&include_adult=false&language=en-US&page=1`
       );
       const data = await res.json();
-      setTmdbResults(data.results?.slice(0, 8) || []);
+      setTmdbResults(data.results?.slice(0, 10) || []);
     } catch (error) {
       console.error('TMDB search error:', error);
+      showToast('Failed to search TMDB', 'error');
       setTmdbResults([]);
     } finally {
       setTmdbSearching(false);
@@ -88,9 +100,6 @@ export default function AdminDashboard() {
   };
 
   const fillFromTMDB = async (tmdbMovie: TMDBSearchResult) => {
-    setTmdbQuery('');
-    setTmdbResults([]);
-    
     const genres: Record<number, string> = {
       28: 'Action', 12: 'Adventure', 16: 'Animation', 35: 'Comedy',
       80: 'Crime', 99: 'Documentary', 18: 'Drama', 10751: 'Family',
@@ -106,17 +115,26 @@ export default function AdminDashboard() {
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-|-$/g, '');
 
-    setFormData({
-      ...formData,
+    const releaseYear = tmdbMovie.release_date 
+      ? new Date(tmdbMovie.release_date).getFullYear() 
+      : new Date().getFullYear();
+
+    setFormData(prev => ({
+      ...prev,
       title: tmdbMovie.title,
       slug: slug,
       poster: tmdbMovie.poster_path ? `${TMDB_IMAGE_BASE}/w500${tmdbMovie.poster_path}` : '',
       backdrop: tmdbMovie.backdrop_path ? `${TMDB_IMAGE_BASE}/w1280${tmdbMovie.backdrop_path}` : '',
       description: tmdbMovie.overview || '',
-      year: tmdbMovie.release_date ? new Date(tmdbMovie.release_date).getFullYear() : new Date().getFullYear(),
+      year: releaseYear,
       genre: genreNames.join(', '),
-    });
+      mp4Url: '',
+      audioLanguages: '',
+      quality: '720p',
+    }));
     
+    setTmdbQuery('');
+    setTmdbResults([]);
     showToast('Movie details filled from TMDB', 'success');
   };
 
@@ -354,7 +372,7 @@ export default function AdminDashboard() {
                   <input
                     type="text"
                     value={tmdbQuery}
-                    onChange={(e) => { setTmdbQuery(e.target.value); searchTMDB(e.target.value); }}
+                    onChange={(e) => setTmdbQuery(e.target.value)}
                     placeholder="Search for a movie..."
                     className="w-full bg-[#1a1a1a] border border-white/10 rounded-md px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors"
                   />
