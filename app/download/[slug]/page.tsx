@@ -23,18 +23,13 @@ async function getMovie(slug: string) {
 
 export default async function DownloadMoviePage({ params }: PageProps) {
   const { slug } = await params;
-  const movie = await getMovie(slug);
+  const movie = await getMovie(slug) as any;
 
   if (!movie) {
     notFound();
   }
 
-  const downloadLinks = [
-    { quality: '1080p', size: '2.1 GB', color: 'bg-green-600 hover:bg-green-700' },
-    { quality: '720p', size: '950 MB', color: 'bg-blue-600 hover:bg-blue-700' },
-    { quality: '480p', size: '500 MB', color: 'bg-yellow-600 hover:bg-yellow-700' },
-    { quality: '360p', size: '280 MB', color: 'bg-gray-600 hover:bg-gray-700' },
-  ];
+  const mp4Url = movie.mp4Url;
 
   return (
     <div className="min-h-screen bg-[#0d0d0d] pt-16 pb-8">
@@ -80,27 +75,43 @@ export default async function DownloadMoviePage({ params }: PageProps) {
               </p>
 
               <div className="space-y-3">
-                <h3 className="text-white font-semibold text-lg">Download Links</h3>
-                {downloadLinks.map((link) => (
+                <h3 className="text-white font-semibold text-lg">Download</h3>
+                
+                {mp4Url ? (
                   <a
-                    key={link.quality}
-                    href={`/api/download/${movie.slug}?quality=${link.quality}`}
-                    className={`flex items-center justify-between p-4 ${link.color} text-white rounded-lg transition-colors`}
+                    href={mp4Url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between p-4 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
                   >
                     <div className="flex items-center gap-3">
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                       </svg>
                       <div>
-                        <p className="font-semibold">{link.quality}</p>
-                        <p className="text-xs opacity-80">{link.size}</p>
+                        <p className="font-semibold">Download MP4</p>
+                        <p className="text-xs opacity-80">Direct download link</p>
                       </div>
                     </div>
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                     </svg>
                   </a>
-                ))}
+                ) : (
+                  <div className="p-4 bg-gray-700 text-white rounded-lg">
+                    <p className="text-sm">No download link available</p>
+                  </div>
+                )}
+
+                <div className="p-4 bg-[#0d0d0d] rounded-lg">
+                  <p className="text-gray-400 text-sm mb-2">Supported formats:</p>
+                  <div className="flex gap-2">
+                    <span className="text-xs bg-green-600/20 text-green-400 px-2 py-1 rounded">MP4</span>
+                    <span className="text-xs bg-blue-600/20 text-blue-400 px-2 py-1 rounded">MKV</span>
+                    <span className="text-xs bg-purple-600/20 text-purple-400 px-2 py-1 rounded">AVI</span>
+                    <span className="text-xs bg-yellow-600/20 text-yellow-400 px-2 py-1 rounded">MKV</span>
+                  </div>
+                </div>
               </div>
 
               <div className="mt-6 pt-6 border-t border-white/10">

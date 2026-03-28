@@ -33,7 +33,7 @@ export default function AdminDashboard() {
     poster: '',
     backdrop: '',
     description: '',
-    hls: '',
+    mp4Url: '',
     audioLanguages: '',
     quality: '',
     genre: '',
@@ -231,7 +231,7 @@ export default function AdminDashboard() {
       poster: movie.poster,
       backdrop: movie.backdrop,
       description: movie.description,
-      hls: movie.hls,
+      mp4Url: (movie as any).mp4Url || '',
       audioLanguages: movie.audioLanguages.join(', '),
       quality: movie.quality.join(', '),
       genre: movie.genre.join(', '),
@@ -248,7 +248,7 @@ export default function AdminDashboard() {
       poster: '',
       backdrop: '',
       description: '',
-      hls: '',
+      mp4Url: '',
       audioLanguages: '',
       quality: '',
       genre: '',
@@ -406,8 +406,8 @@ export default function AdminDashboard() {
                   <textarea value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} className="w-full bg-[#0d0d0d] border border-white/10 rounded-md px-4 py-2.5 text-white focus:outline-none focus:border-red-500 transition-colors min-h-[80px]" required />
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-400 mb-1">HLS URL *</label>
-                  <input type="url" value={formData.hls} onChange={(e) => setFormData({ ...formData, hls: e.target.value })} className="w-full bg-[#0d0d0d] border border-white/10 rounded-md px-4 py-2.5 text-white focus:outline-none focus:border-red-500 transition-colors" placeholder="https://.../master.m3u8" required />
+                  <label className="block text-sm text-gray-400 mb-1">MP4 URL *</label>
+                  <input type="url" value={formData.mp4Url} onChange={(e) => setFormData({ ...formData, mp4Url: e.target.value })} className="w-full bg-[#0d0d0d] border border-white/10 rounded-md px-4 py-2.5 text-white focus:outline-none focus:border-red-500 transition-colors" placeholder="https://.../movie.mp4" required />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-400 mb-1">Audio Languages *</label>
