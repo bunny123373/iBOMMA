@@ -130,8 +130,8 @@ export default function DownloadPage() {
         </div>
 
         <div className="mt-8 text-center">
-          <Link href="/" className="text-[#00a8e1] hover:text-[#0092c7] text-sm">
-            ← Back to Home
+          <Link href="/home" className="text-[#00a8e1] hover:text-[#0092c7] text-sm">
+            ← Browse Movies
           </Link>
         </div>
       </div>
