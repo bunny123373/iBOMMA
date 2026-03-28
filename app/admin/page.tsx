@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Movie } from '@/lib/types';
 import { showToast } from '@/components/Toaster';
 
-const TMDB_API_KEY = '83a327b565b5e333dd2dc755f76177a9';
+const TMDB_API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY || '';
 const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p';
 
 interface TMDBSearchResult {
