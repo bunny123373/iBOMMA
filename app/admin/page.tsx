@@ -170,9 +170,7 @@ export default function AdminDashboard() {
     };
 
     try {
-      const url = editingMovie
-        ? `/api/admin/movies`
-        : '/api/admin/movies';
+      const url = editingMovie ? `/api/admin/movies` : '/api/admin/movies';
       const method = editingMovie ? 'PUT' : 'POST';
 
       const res = await fetch(url, {
@@ -263,17 +261,15 @@ export default function AdminDashboard() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-mirror-darker flex items-center justify-center px-4">
-        <div className="w-full max-w-md">
+      <div className="min-h-screen bg-[#0d0d0d] flex items-center justify-center px-4">
+        <div className="w-full max-w-sm">
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-white mb-2">
-              WATCH<span className="text-mirror-primary">MIRROR</span>
-            </h1>
-            <p className="text-gray-400">Admin Dashboard</p>
+            <h1 className="text-3xl font-bold text-white mb-2">iBOMMA</h1>
+            <p className="text-gray-400">Admin Panel</p>
           </div>
 
-          <form onSubmit={handleLogin} className="glass-effect rounded-2xl p-8">
-            <h2 className="text-2xl font-bold text-white mb-6">Login</h2>
+          <form onSubmit={handleLogin} className="bg-[#1a1a1a] rounded-lg p-6 border border-white/10">
+            <h2 className="text-xl font-semibold text-white mb-6">Login</h2>
 
             <div className="space-y-4">
               <div>
@@ -283,7 +279,7 @@ export default function AdminDashboard() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter admin password"
-                  className="premium-input"
+                  className="w-full bg-[#0d0d0d] border border-white/10 rounded-md px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors"
                   required
                 />
               </div>
@@ -291,7 +287,7 @@ export default function AdminDashboard() {
               <button
                 type="submit"
                 disabled={loading}
-                className="btn-primary w-full"
+                className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-md font-semibold transition-colors disabled:opacity-50"
               >
                 {loading ? 'Logging in...' : 'Login'}
               </button>
@@ -303,79 +299,69 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-mirror-darker pt-20 md:pt-24 pb-8">
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
+    <div className="min-h-screen bg-[#0d0d0d] pt-16 pb-8">
+      <div className="max-w-6xl mx-auto px-4">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
           <div>
-            <h1 className="text-2xl md:text-4xl font-bold text-white">
-              WATCH<span className="text-mirror-primary">MIRROR</span> Admin
-            </h1>
-            <p className="text-gray-400 mt-2">Manage your movie library</p>
+            <h1 className="text-2xl font-bold text-white">iBOMMA Admin</h1>
+            <p className="text-gray-400 text-sm mt-1">Manage your movie library</p>
           </div>
-          <div className="flex items-center space-x-2 md:space-x-4 w-full md:w-auto">
+          <div className="flex items-center gap-3">
             <button
-              onClick={() => {
-                resetForm();
-                setShowAddForm(true);
-              }}
-              className="btn-primary flex-1 md:flex-none"
+              onClick={() => { resetForm(); setShowAddForm(true); }}
+              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md font-medium text-sm transition-colors"
             >
-              Add Movie
+              + Add Movie
             </button>
-            <button onClick={handleLogout} className="btn-secondary">
+            <button onClick={handleLogout} className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-md font-medium text-sm transition-colors">
               Logout
             </button>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-8">
-          <div className="glass-effect rounded-xl p-4 md:p-6">
-            <p className="text-gray-400 text-sm mb-2">Total Movies</p>
-            <p className="text-2xl md:text-3xl font-bold text-white">{movies.length}</p>
+        <div className="grid grid-cols-3 gap-4 mb-8">
+          <div className="bg-[#1a1a1a] rounded-lg p-4 border border-white/10">
+            <p className="text-gray-400 text-xs mb-1">Total Movies</p>
+            <p className="text-2xl font-bold text-white">{movies.length}</p>
           </div>
-          <div className="glass-effect rounded-xl p-4 md:p-6">
-            <p className="text-gray-400 text-sm mb-2">Featured Movies</p>
-            <p className="text-2xl md:text-3xl font-bold text-white">
-              {movies.filter((m) => m.featured).length}
-            </p>
+          <div className="bg-[#1a1a1a] rounded-lg p-4 border border-white/10">
+            <p className="text-gray-400 text-xs mb-1">Featured</p>
+            <p className="text-2xl font-bold text-yellow-500">{movies.filter((m) => m.featured).length}</p>
           </div>
-          <div className="glass-effect rounded-xl p-4 md:p-6 sm:col-span-2 md:col-span-1">
-            <p className="text-gray-400 text-sm mb-2">Latest Added</p>
-            <p className="text-lg md:text-2xl font-bold text-white truncate">
-              {movies.length > 0 ? movies[0]?.title : 'None'}
-            </p>
+          <div className="bg-[#1a1a1a] rounded-lg p-4 border border-white/10">
+            <p className="text-gray-400 text-xs mb-1">Latest</p>
+            <p className="text-sm font-bold text-white truncate">{movies.length > 0 ? movies[0]?.title : 'None'}</p>
           </div>
         </div>
 
         {showAddForm && (
-          <div className="glass-effect rounded-2xl p-6 md:p-8 mb-8">
-            <h2 className="text-2xl font-bold text-white mb-6">
-              {editingMovie ? 'Edit Movie' : 'Add New Movie'}
-            </h2>
+          <div className="bg-[#1a1a1a] rounded-lg p-6 mb-8 border border-white/10">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-lg font-semibold text-white">
+                {editingMovie ? 'Edit Movie' : 'Add New Movie'}
+              </h2>
+              <button onClick={resetForm} className="text-gray-400 hover:text-white">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
 
             {!editingMovie && (
-              <div className="mb-6 p-4 bg-mirror-gray/30 rounded-xl">
+              <div className="mb-6 p-4 bg-[#0d0d0d] rounded-lg">
                 <label className="block text-sm text-gray-400 mb-2">Search TMDB to Auto-Fill</label>
                 <div className="relative">
                   <input
                     type="text"
                     value={tmdbQuery}
-                    onChange={(e) => {
-                      setTmdbQuery(e.target.value);
-                      searchTMDB(e.target.value);
-                    }}
-                    placeholder="Search for a movie on TMDB..."
-                    className="premium-input w-full pr-10"
+                    onChange={(e) => { setTmdbQuery(e.target.value); searchTMDB(e.target.value); }}
+                    placeholder="Search for a movie..."
+                    className="w-full bg-[#1a1a1a] border border-white/10 rounded-md px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors"
                   />
-                  <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
                 </div>
-                {tmdbSearching && (
-                  <p className="text-sm text-gray-400 mt-2">Searching...</p>
-                )}
+                {tmdbSearching && <p className="text-sm text-gray-400 mt-2">Searching...</p>}
                 {tmdbResults.length > 0 && (
-                  <div className="mt-2 bg-mirror-dark rounded-lg overflow-hidden border border-white/10 max-h-64 overflow-y-auto">
+                  <div className="mt-2 bg-[#1a1a1a] rounded-lg overflow-hidden border border-white/10 max-h-48 overflow-y-auto">
                     {tmdbResults.map((result) => (
                       <button
                         key={result.id}
@@ -384,17 +370,11 @@ export default function AdminDashboard() {
                         className="w-full flex items-center gap-3 p-3 hover:bg-white/10 text-left transition-colors"
                       >
                         {result.poster_path && (
-                          <img
-                            src={`${TMDB_IMAGE_BASE}/w92${result.poster_path}`}
-                            alt={result.title}
-                            className="w-10 h-14 object-cover rounded"
-                          />
+                          <img src={`${TMDB_IMAGE_BASE}/w92${result.poster_path}`} alt={result.title} className="w-8 h-12 object-cover rounded" />
                         )}
                         <div className="flex-1 min-w-0">
-                          <p className="text-white font-medium truncate">{result.title}</p>
-                          <p className="text-gray-400 text-sm">
-                            {result.release_date ? new Date(result.release_date).getFullYear() : 'N/A'}
-                          </p>
+                          <p className="text-white text-sm font-medium truncate">{result.title}</p>
+                          <p className="text-gray-500 text-xs">{result.release_date ? new Date(result.release_date).getFullYear() : 'N/A'}</p>
                         </div>
                       </button>
                     ))}
@@ -406,140 +386,57 @@ export default function AdminDashboard() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm text-gray-400 mb-2">Title *</label>
-                  <input
-                    type="text"
-                    value={formData.title}
-                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                    className="premium-input"
-                    required
-                  />
+                  <label className="block text-sm text-gray-400 mb-1">Title *</label>
+                  <input type="text" value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} className="w-full bg-[#0d0d0d] border border-white/10 rounded-md px-4 py-2.5 text-white focus:outline-none focus:border-red-500 transition-colors" required />
                 </div>
-
                 <div>
-                  <label className="block text-sm text-gray-400 mb-2">Slug *</label>
-                  <input
-                    type="text"
-                    value={formData.slug}
-                    onChange={(e) => setFormData({ ...formData, slug: e.target.value.toLowerCase().replace(/\s+/g, '-') })}
-                    className="premium-input"
-                    required
-                  />
+                  <label className="block text-sm text-gray-400 mb-1">Slug *</label>
+                  <input type="text" value={formData.slug} onChange={(e) => setFormData({ ...formData, slug: e.target.value.toLowerCase().replace(/\s+/g, '-') })} className="w-full bg-[#0d0d0d] border border-white/10 rounded-md px-4 py-2.5 text-white focus:outline-none focus:border-red-500 transition-colors" required />
                 </div>
-
                 <div>
-                  <label className="block text-sm text-gray-400 mb-2">Poster URL *</label>
-                  <input
-                    type="url"
-                    value={formData.poster}
-                    onChange={(e) => setFormData({ ...formData, poster: e.target.value })}
-                    className="premium-input"
-                    placeholder="https://..."
-                    required
-                  />
+                  <label className="block text-sm text-gray-400 mb-1">Poster URL *</label>
+                  <input type="url" value={formData.poster} onChange={(e) => setFormData({ ...formData, poster: e.target.value })} className="w-full bg-[#0d0d0d] border border-white/10 rounded-md px-4 py-2.5 text-white focus:outline-none focus:border-red-500 transition-colors" placeholder="https://..." required />
                 </div>
-
                 <div>
-                  <label className="block text-sm text-gray-400 mb-2">Backdrop URL *</label>
-                  <input
-                    type="url"
-                    value={formData.backdrop}
-                    onChange={(e) => setFormData({ ...formData, backdrop: e.target.value })}
-                    className="premium-input"
-                    placeholder="https://..."
-                    required
-                  />
+                  <label className="block text-sm text-gray-400 mb-1">Backdrop URL *</label>
+                  <input type="url" value={formData.backdrop} onChange={(e) => setFormData({ ...formData, backdrop: e.target.value })} className="w-full bg-[#0d0d0d] border border-white/10 rounded-md px-4 py-2.5 text-white focus:outline-none focus:border-red-500 transition-colors" placeholder="https://..." required />
                 </div>
-
                 <div className="md:col-span-2">
-                  <label className="block text-sm text-gray-400 mb-2">Description *</label>
-                  <textarea
-                    value={formData.description}
-                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    className="premium-input min-h-[100px]"
-                    required
-                  />
+                  <label className="block text-sm text-gray-400 mb-1">Description *</label>
+                  <textarea value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} className="w-full bg-[#0d0d0d] border border-white/10 rounded-md px-4 py-2.5 text-white focus:outline-none focus:border-red-500 transition-colors min-h-[80px]" required />
                 </div>
-
-                <div className="md:col-span-2">
-                  <label className="block text-sm text-gray-400 mb-2">HLS URL *</label>
-                  <input
-                    type="url"
-                    value={formData.hls}
-                    onChange={(e) => setFormData({ ...formData, hls: e.target.value })}
-                    className="premium-input"
-                    placeholder="https://.../master.m3u8"
-                    required
-                  />
-                </div>
-
                 <div>
-                  <label className="block text-sm text-gray-400 mb-2">Audio Languages * (comma separated)</label>
-                  <input
-                    type="text"
-                    value={formData.audioLanguages}
-                    onChange={(e) => setFormData({ ...formData, audioLanguages: e.target.value })}
-                    className="premium-input"
-                    placeholder="Telugu, Hindi, English"
-                    required
-                  />
+                  <label className="block text-sm text-gray-400 mb-1">HLS URL *</label>
+                  <input type="url" value={formData.hls} onChange={(e) => setFormData({ ...formData, hls: e.target.value })} className="w-full bg-[#0d0d0d] border border-white/10 rounded-md px-4 py-2.5 text-white focus:outline-none focus:border-red-500 transition-colors" placeholder="https://.../master.m3u8" required />
                 </div>
-
                 <div>
-                  <label className="block text-sm text-gray-400 mb-2">Quality * (comma separated)</label>
-                  <input
-                    type="text"
-                    value={formData.quality}
-                    onChange={(e) => setFormData({ ...formData, quality: e.target.value })}
-                    className="premium-input"
-                    placeholder="1080p, 720p, 480p"
-                    required
-                  />
+                  <label className="block text-sm text-gray-400 mb-1">Audio Languages *</label>
+                  <input type="text" value={formData.audioLanguages} onChange={(e) => setFormData({ ...formData, audioLanguages: e.target.value })} className="w-full bg-[#0d0d0d] border border-white/10 rounded-md px-4 py-2.5 text-white focus:outline-none focus:border-red-500 transition-colors" placeholder="Telugu, Hindi, English" required />
                 </div>
-
                 <div>
-                  <label className="block text-sm text-gray-400 mb-2">Genre * (comma separated)</label>
-                  <input
-                    type="text"
-                    value={formData.genre}
-                    onChange={(e) => setFormData({ ...formData, genre: e.target.value })}
-                    className="premium-input"
-                    placeholder="Action, Drama, Thriller"
-                    required
-                  />
+                  <label className="block text-sm text-gray-400 mb-1">Quality *</label>
+                  <input type="text" value={formData.quality} onChange={(e) => setFormData({ ...formData, quality: e.target.value })} className="w-full bg-[#0d0d0d] border border-white/10 rounded-md px-4 py-2.5 text-white focus:outline-none focus:border-red-500 transition-colors" placeholder="1080p, 720p" required />
                 </div>
-
                 <div>
-                  <label className="block text-sm text-gray-400 mb-2">Year *</label>
-                  <input
-                    type="number"
-                    value={formData.year}
-                    onChange={(e) => setFormData({ ...formData, year: parseInt(e.target.value) })}
-                    className="premium-input"
-                    min="1900"
-                    max="2030"
-                    required
-                  />
+                  <label className="block text-sm text-gray-400 mb-1">Genre *</label>
+                  <input type="text" value={formData.genre} onChange={(e) => setFormData({ ...formData, genre: e.target.value })} className="w-full bg-[#0d0d0d] border border-white/10 rounded-md px-4 py-2.5 text-white focus:outline-none focus:border-red-500 transition-colors" placeholder="Action, Drama" required />
                 </div>
-
+                <div>
+                  <label className="block text-sm text-gray-400 mb-1">Year *</label>
+                  <input type="number" value={formData.year} onChange={(e) => setFormData({ ...formData, year: parseInt(e.target.value) })} className="w-full bg-[#0d0d0d] border border-white/10 rounded-md px-4 py-2.5 text-white focus:outline-none focus:border-red-500 transition-colors" min="1900" max="2030" required />
+                </div>
                 <div className="flex items-center">
-                  <label className="flex items-center space-x-3 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={formData.featured}
-                      onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-                      className="w-5 h-5 rounded border-gray-600 bg-mirror-gray text-mirror-primary focus:ring-mirror-primary"
-                    />
-                    <span className="text-white">Featured Movie</span>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" checked={formData.featured} onChange={(e) => setFormData({ ...formData, featured: e.target.checked })} className="w-4 h-4 rounded border-gray-600 bg-[#0d0d0d] text-red-600 focus:ring-red-500" />
+                    <span className="text-white text-sm">Featured</span>
                   </label>
                 </div>
               </div>
-
-              <div className="flex items-center space-x-4 pt-4">
-                <button type="submit" disabled={loading} className="btn-primary">
-                  {loading ? 'Saving...' : editingMovie ? 'Update Movie' : 'Add Movie'}
+              <div className="flex gap-3 pt-2">
+                <button type="submit" disabled={loading} className="bg-red-600 hover:bg-red-700 text-white px-6 py-2.5 rounded-md font-medium text-sm transition-colors disabled:opacity-50">
+                  {loading ? 'Saving...' : editingMovie ? 'Update' : 'Add Movie'}
                 </button>
-                <button type="button" onClick={resetForm} className="btn-secondary">
+                <button type="button" onClick={resetForm} className="bg-white/10 hover:bg-white/20 text-white px-6 py-2.5 rounded-md font-medium text-sm transition-colors">
                   Cancel
                 </button>
               </div>
@@ -547,137 +444,56 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        <div className="glass-effect rounded-2xl overflow-hidden">
-          <div className="p-4 md:p-6 border-b border-white/10">
-            <h2 className="text-lg md:text-xl font-bold text-white">Movie Library</h2>
+        <div className="bg-[#1a1a1a] rounded-lg overflow-hidden border border-white/10">
+          <div className="p-4 border-b border-white/10">
+            <h2 className="text-lg font-semibold text-white">Movie Library ({movies.length})</h2>
           </div>
-
-          <div className="hidden md:block overflow-x-auto">
+          <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-mirror-gray/50">
+              <thead className="bg-[#0d0d0d]">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    Movie
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    Year
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    Languages
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    Featured
-                  </th>
-                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    Actions
-                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Movie</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Year</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase hidden md:table-cell">Languages</th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-400 uppercase">Featured</th>
+                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-400 uppercase">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/10">
                 {movies.map((movie) => (
                   <tr key={movie._id} className="hover:bg-white/5">
                     <td className="px-4 py-3">
-                      <div className="flex items-center">
-                        <img
-                          src={movie.poster}
-                          alt={movie.title}
-                          className="w-10 h-14 object-cover rounded"
-                        />
-                        <div className="ml-3">
-                          <p className="text-white font-medium text-sm">{movie.title}</p>
-                          <p className="text-gray-500 text-xs">{movie.slug}</p>
+                      <div className="flex items-center gap-3">
+                        <img src={movie.poster} alt={movie.title} className="w-10 h-14 object-cover rounded" />
+                        <div className="min-w-0">
+                          <p className="text-white text-sm font-medium truncate">{movie.title}</p>
+                          <p className="text-gray-500 text-xs truncate">{movie.slug}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-gray-300 text-sm">
-                      {movie.year}
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="flex flex-wrap gap-1">
+                    <td className="px-4 py-3 text-gray-300 text-sm">{movie.year}</td>
+                    <td className="px-4 py-3 hidden md:table-cell">
+                      <div className="flex gap-1">
                         {movie.audioLanguages.slice(0, 2).map((lang) => (
-                          <span key={lang} className="badge badge-language text-xs">
-                            {lang}
-                          </span>
+                          <span key={lang} className="text-xs bg-red-600/20 text-red-400 px-2 py-0.5 rounded">{lang}</span>
                         ))}
                       </div>
                     </td>
-                    <td className="px-4 py-3">
-                      {movie.featured ? (
-                        <span className="text-yellow-500 text-sm">★</span>
-                      ) : (
-                        <span className="text-gray-500">-</span>
-                      )}
+                    <td className="px-4 py-3 text-center">
+                      {movie.featured ? <span className="text-yellow-500">★</span> : <span className="text-gray-600">-</span>}
                     </td>
                     <td className="px-4 py-3 text-right">
-                      <button
-                        onClick={() => handleEdit(movie)}
-                        className="text-blue-400 hover:text-blue-300 text-sm mr-3"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(movie.slug)}
-                        className="text-red-400 hover:text-red-300 text-sm"
-                      >
-                        Delete
-                      </button>
+                      <button onClick={() => handleEdit(movie)} className="text-blue-400 hover:text-blue-300 text-sm mr-3">Edit</button>
+                      <button onClick={() => handleDelete(movie.slug)} className="text-red-400 hover:text-red-300 text-sm">Delete</button>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-
-          <div className="md:hidden divide-y divide-white/10">
-            {movies.map((movie) => (
-              <div key={movie._id} className="p-4 hover:bg-white/5">
-                <div className="flex items-start gap-3">
-                  <img
-                    src={movie.poster}
-                    alt={movie.title}
-                    className="w-16 h-22 object-cover rounded"
-                  />
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="min-w-0">
-                        <p className="text-white font-medium truncate">{movie.title}</p>
-                        <p className="text-gray-500 text-xs">{movie.slug}</p>
-                      </div>
-                      <div className="flex items-center gap-2 flex-shrink-0">
-                        {movie.featured && <span className="text-yellow-500">★</span>}
-                        <button
-                          onClick={() => handleEdit(movie)}
-                          className="text-blue-400 hover:text-blue-300 text-xs px-2 py-1"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => handleDelete(movie.slug)}
-                          className="text-red-400 hover:text-red-300 text-xs px-2 py-1"
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap items-center gap-2 mt-2">
-                      <span className="text-gray-400 text-xs">{movie.year}</span>
-                      <div className="flex flex-wrap gap-1">
-                        {movie.audioLanguages.slice(0, 2).map((lang) => (
-                          <span key={lang} className="badge badge-language text-xs">
-                            {lang}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
           {movies.length === 0 && (
-            <div className="p-8 md:p-12 text-center">
-              <p className="text-gray-400">No movies in library. Add your first movie!</p>
+            <div className="p-8 text-center">
+              <p className="text-gray-400">No movies yet. Add your first movie!</p>
             </div>
           )}
         </div>
