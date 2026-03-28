@@ -5,9 +5,9 @@ import { MobileNav } from '@/components/MobileNav';
 import { Toaster } from '@/components/Toaster';
 
 export const metadata: Metadata = {
-  title: 'Prime Video - Movies & TV Shows',
-  description: 'Watch movies and TV shows online',
-  keywords: ['streaming', 'movies', 'tv shows', 'prime video'],
+  title: 'iBOMMA - Download Movies in HD',
+  description: 'Download latest movies in HD quality for free',
+  keywords: ['download movies', 'free movies', 'hd movies', 'ibomma'],
   icons: {
     icon: '/favicon.ico',
   },

@@ -38,7 +38,7 @@ export const Navbar = () => {
             <div className="flex items-center gap-8">
               <Link href="/home" className="flex items-center">
                 <span className="text-2xl font-bold text-white">
-                  Prime<span className="text-[#00a8e1]">Video</span>
+                  iBOMMA
                 </span>
               </Link>
 
